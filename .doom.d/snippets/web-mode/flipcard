@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: flipcard
+# key: flipcard
+# --
+<!--// .flip-card \\-->
+<div class="flip-card">
+    <!--// .flip-card-inner \\-->
+    <div class="flip-card-inner">
+        <!--// .flip-card-front \\-->
+        <div class="flip-card-front">
+            <!-- Front Content -->
+        </div>
+        <!--\\ .flip-card-front //-->
+        <!--// .flip-card-back \\-->
+        <div class="flip-card-back">
+            <!-- Back Content -->
+        </div>
+        <!--\\ .flip-card-back //-->
+    </div>
+    <!--\\ .flip-card-inner //-->
+</div>
+<!--\\ .flip-card //-->
