@@ -3,20 +3,13 @@
 
 (doom! :feature
        ;;debugger          ; FIXME stepping through code, to help you add bugs
-       eval              ; run code, run (also, repls)
-       (evil +everywhere); come to the dark side, we have cookies
-       file-templates    ; auto-snippets for empty files
-       (lookup           ; helps you navigate your code and documentation
-        +docsets)        ; ...or in Dash docsets locally
-       snippets          ; my elves. They type so I don't have to
        ;;spellcheck        ; tasing you for misspelling mispelling
        ;;syntax-checker    ; tasing you for every semicolon you forget
-       workspaces        ; tab emulation, persistence & separate workspaces
 
        :completion
        (company
         ;+auto
-        +childframe
+        ;+childframe
         )           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido              ; the other *other* search engine...
@@ -28,7 +21,8 @@
        doom-dashboard    ; a nifty splash screen for Emacs
        ;;doom-modeline     ; a snazzy Atom-inspired mode-line
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       evil-goggles      ; display visual hints when editing in evil
+       ophints           ; display visual hints when editing in evil
+       fill-column
        ;;fci               ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE tags
        modeline          ; snazzy, Atom-inspired modeline, plus API
@@ -45,19 +39,26 @@
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
        ;;indent-guides
+       workspaces        ; tab emulation, persistence & separate workspaces
+
 
        :editor
+       (evil +everywhere); come to the dark side, we have cookies
        ;;(format +onsave)  ; automated prettiness
        ;;lispy             ; vim for lisp, for people who dont like vim
        multiple-cursors  ; editing in many places at once
        ;;parinfer          ; turn lisp into python, sort of
        rotate-text       ; cycle region at point between text candidates
        fold
+       snippets          ; my elves. They type so I don't have to
+       file-templates    ; auto-snippets for empty files
+
+
 
        :emacs
        (dired            ; making dired pretty [functional]
-       +ranger         ; bringing the goodness of ranger to dired
-       ;;+icons          ; colorful icons for dired-mode
+        +ranger         ; bringing the goodness of ranger to dired
+        ;;+icons          ; colorful icons for dired-mode
         )
        ;;ediff             ; comparing files in Emacs
        electric          ; smarter, keyword-based electric-indent
@@ -68,6 +69,9 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :tools
+       eval              ; run code, run (also, repls)
+       (lookup           ; helps you navigate your code and documentation
+        +docsets)        ; ...or in Dash docsets locally
        ;;ansible
        ;;docker
        editorconfig      ; let someone else argue about tabs vs spaces
@@ -86,6 +90,7 @@
        ;;wakatime
        flyspell
        flycheck
+       vterm
 
        :lang
        assembly          ; assembly for fun or debugging
@@ -103,11 +108,11 @@
        markdown          ; writing docs for people to ignore
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
-        +attach          ; custom attachment system
-        +babel           ; running code in org
-        +capture         ; org-capture in and outside of Emacs
-        +export          ; Exporting org to whatever you want
-        +present)        ; Emacs for presentations
+        +dragndrop
+        +ipython
+        +pandoc
+        +gnuplot
+        +present)
        php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        python            ; beautiful is better than ugly
@@ -144,3 +149,23 @@
        ;; provides a Spacemacs-inspired keybinding scheme and a smartparens
        ;; config. Use it as a reference for your own modules.
        (default +bindings +smartparens))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   (quote
+    ((php-project-bootstrap-scripts
+      (php-project-root . "/Web/app/config/bootstrap.php"))
+     (php-project-bootstrap-scripts
+      (php-project-root . "/app/config/bootstrap.php")
+      ("/Users/codywilson/Development/ide-stubs/vendor/autoload.php"))
+     (ssh-deploy-automatically-detect-remote-changes)
+     (ssh-deploy-on-explicit-save . t)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

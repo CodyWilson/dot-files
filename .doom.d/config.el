@@ -9,12 +9,11 @@
       gnutls-min-prime-bits 2048
       nsm-save-host-names t)
 ;; Place your private configuration here
-(setq doom-font (font-spec :family "IBM Plex Mono" :size 15))
-(setq doom-big-font (font-spec :family "IBM Plex Mono" :size 20))
+(setq doom-font (font-spec :family "IBM Plex Mono" :size 16))
+(setq doom-big-font (font-spec :family "IBM Plex Mono" :size 22))
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
-
-;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+                                        ;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (unless (and (fboundp 'play-sound-internal)
              (subrp (symbol-function 'play-sound-internal)))
@@ -34,8 +33,11 @@
   (async-start (lambda () (require 'simple) (play-sound-file "~/dspistol.wav")))
   (backward-button n nil))
 
-;(require! 'ac-php-core)
-
+                                        ;(require! 'ac-php-core)
+;(map! :leader
+;      :map doom-leader-map
+;        (:prefix ("c" . "code")
+;          :desc "Toggle comment" "l" #'(message "hi!")))
 (defun move-line-up ()
   (interactive)
   (transpose-lines 1)
@@ -52,8 +54,8 @@
 ;; do what. Specifically for command -> control.
 ;; Long story short, control + right/left changes desktop workspaces in OSX.
 ;; And I don't want that to happen when I'm navigating code. So I rebind it.
-(setq mac-command-modifier 'control)
-(setq mac-control-modifier 'meta)
+ ;;(setq mac-command-modifier 'control)
+ ;; (setq mac-control-modifier 'command)
 
 (defun replace-in-string (what with in)
   (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
@@ -72,19 +74,19 @@
 
 (setq-default
  whitespace-line-column 80)
+;(delq! 'trailing whitespace-style)
+ (setq whitespace-style '(face indentation tabs tab-mark spaces space-mark newline newline-mark))
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
-
 ;; I use snake_case a lot. And C-right/left more than I probably should.
 ;; What can I say, emacs navigation skills take time to develop ;)
 (setq global-superword-mode 1)
-
-;(require 'wgrep)
-;(require 'swiper)
-;(require 'ag)
-;(require 'wgrep-ag)
+                                        ;(require 'wgrep)
+                                        ;(require 'swiper)
+                                        ;(require 'ag)
+                                        ;(require 'wgrep-ag)
 
 (setq web-mode-enable-auto-pairing t)
 (exec-path-from-shell-initialize)
@@ -115,12 +117,17 @@
   (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 ;; These were originally there in doom, and then Henrik removed them for some reason.
 (map!
+ :i [tab] #'indent-for-tab-command
  :i "M-v" #'clipboard-yank
  :v "M-c" #'evil-yank
  :i "C-e" #'doom/forward-to-last-non-comment-or-eol
  :i "<M-backspace>" #'doom/backward-kill-to-bol-and-indent
  :i "C-a" #'beginning-of-line
- :nvme "M-a" #'mark-whole-buffer)
+ :nvme "M-a" #'mark-whole-buffer
+ :i "C-l" #'right-char
+ :i "C-j" #'left-char
+ :i "C-k" #'next-line
+ :i "C-i" #'previous-line)
 (map! :leader
       :desc "Ace Window" "SPC" #'ace-window)
 
@@ -151,19 +158,19 @@
         web-mode-auto-close-style 0))
 
 ;; PHP Stuff
-;(def-package! zephir-mode
-;  :when (featurep! :lang php)
-;  :defer t
-;  :mode "\\.zep$")
-;(def-project-mode! +php-phalcon-mode
-;  :modes (php-mode web-mode zephir-mode)
-;  :files (and ".phalcon" ".htrouter.php"))
+                                        ;(def-package! zephir-mode
+                                        ;  :when (featurep! :lang php)
+                                        ;  :defer t
+                                        ;  :mode "\\.zep$")
+                                        ;(def-project-mode! +php-phalcon-mode
+                                        ;  :modes (php-mode web-mode zephir-mode)
+                                        ;  :files (and ".phalcon" ".htrouter.php"))
 
 ;; temp fix for issue with php-cs-fixer-fix
-;(after! php-mode
-;  (set-formatter! 'php-mode nil))
+                                        ;(after! php-mode
+                                        ;  (set-formatter! 'php-mode nil))
 
-;(setq company-box-icons-acphp '(nil))
+                                        ;(setq company-box-icons-acphp '(nil))
 
 (def-package! composer
   :when (featurep! :lang php)
@@ -206,9 +213,75 @@
                    "activate\n"
                    "end tell")))
       (start-process "firefox-activate" nil "osascript" "-e" script)))
-
+  (defun firefox-refresh ()
+    (interactive)
+    (let ((script (concat
+                   "tell application \"Firefox\"\n"
+                   "activate\n"
+                   "end tell\n"
+                   "tell application \"System Events\"\n"
+                   "tell process \"Firefox\"\n"
+                   "keystroke \"r\" using {command down}\n"
+                   "end tell\n"
+                   "end tell\n"
+                   "tell application \"Emacs\"\n"
+                   "activate\n"
+                   "end tell")))
+      (start-process "firefox-refresh" nil "osascript" "-e" script)))
   ;; This is a quick switch to firefox
   ;; (using apple script)
   (map!
    :n "C-/" #'firefox-activate
+   :n "C-." #'firefox-refresh
    ))
+
+(defun deploy-project-to-path (path-local path-remote)
+  "This deletes the remote path & uploads everything fresh taking into account rsync excludes"
+  ;;(delete-directory path-remote t)
+  ;;(make-directory path-remote)
+  ;; Take a tramp path formatted /ssh:name@server.com:/ and remove /ssh:
+  ;; that way it will work for rsync
+
+  (let ((path-upload (replace-regexp-in-string "^/[^:]+:" "" path-remote)))
+    (call-process "rsync"
+                  nil ; Infile (not needed?)
+                  nil ; Destination (not needed?)
+                  nil ; Display (not needed)
+                  "-a"
+                  "--force"
+                  "--delete"
+                  "--delete-excluded"
+                  (concat "--exclude-from=" path-local "rsync_exclude.txt")
+                  (concat "--exclude-from=" path-local ".gitignore")
+                  path-local
+                  path-upload)))
+
+(defun deploy-project-to-dev ()
+  "This cleans the dev server's public directory & uploads"
+  (interactive)
+  (unless ssh-deploy-root-local
+    (error "Invalid root local"))
+  (unless ssh-deploy-root-remote
+    (error "Invalid root remote"))
+  (unless (string-match-p (regexp-quote "dev2") ssh-deploy-root-remote)
+    (error "You're not trying to upload to the dev server"))
+  (deploy-project-to-path ssh-deploy-root-local ssh-deploy-root-remote)
+  (message "Finished deploying project"))
+
+(after! php-mode
+  (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+  (add-hook 'php-mode-hook (lambda() (setq c-basic-offset 4)))
+  )
+;; ORG MODE CHANGES
+
+;; Set default column view headings: Task Total-Time Time-Stamp
+(setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16LASTWORKED %16CLOSED")
+(setq org-log-done "time")
+(setq org-archive-location (concat org-directory "/.archive/archived.org::"))
+(add-hook 'org-clock-out-hook
+          (lambda ()
+            (org-set-property "LASTWORKED" (format-time-string "[%Y-%m-%d %a]"))))
+(setq org-descriptive-links nil)
+(require 'elcord)
+(setq elcord-display-buffer-details 'nil)
+(elcord-mode)
