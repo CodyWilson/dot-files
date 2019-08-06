@@ -15,12 +15,12 @@
 (package! ag)
 (package! wgrep-ag)
 (package! exec-path-from-shell)
-(package! play-sound :recipe (:fetcher github :repo "leoliu/play-sound-osx"))
+(package! play-sound :recipe (:type git :host github :repo "leoliu/play-sound-osx"))
 ;; PHPActor has an issue installing with the default, cause the JSON files
 ;; are missing
 (when (featurep! :lang php)
-  (package! zephir-mode :recipe
-    (:fetcher "github" :repo "sergeyklay/zephir-mode")))
+    (package! zephir-mode :recipe
+    (:type git :host github :repo "sergeyklay/zephir-mode")))
 ;(package! php-boris :disable t)
 (package! ac-php-core)
 ;(package! company-php :disable t)
@@ -34,3 +34,4 @@
 ;(when (and (featurep! :feature lookup) (featurep! :lang php))
   (package! php-eldoc);)
 (package! elcord)
+(package! fancy-battery)

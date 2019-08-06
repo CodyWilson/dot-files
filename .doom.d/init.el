@@ -64,7 +64,6 @@
        electric          ; smarter, keyword-based electric-indent
        ;;eshell            ; a consistent, cross-platform shell (WIP)
        ;;hideshow          ; basic code-folding support
-       imenu             ; an imenu sidebar and searchable code index
        ;;term              ; terminals in Emacs
        vc                ; version-control and Emacs, sitting in a tree
 
@@ -90,7 +89,6 @@
        ;;wakatime
        flyspell
        flycheck
-       vterm
 
        :lang
        assembly          ; assembly for fun or debugging
@@ -140,6 +138,9 @@
        ;;floobits          ; peer programming for a price
        ;;impatient-mode    ; show off code over HTTP
 
+       :term
+       vterm
+
        :config
        ;; For literate config users. This will tangle+compile a config.org
        ;; literate config in your `doom-private-dir' whenever it changes.
@@ -149,23 +150,3 @@
        ;; provides a Spacemacs-inspired keybinding scheme and a smartparens
        ;; config. Use it as a reference for your own modules.
        (default +bindings +smartparens))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   (quote
-    ((php-project-bootstrap-scripts
-      (php-project-root . "/Web/app/config/bootstrap.php"))
-     (php-project-bootstrap-scripts
-      (php-project-root . "/app/config/bootstrap.php")
-      ("/Users/codywilson/Development/ide-stubs/vendor/autoload.php"))
-     (ssh-deploy-automatically-detect-remote-changes)
-     (ssh-deploy-on-explicit-save . t)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

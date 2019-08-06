@@ -8,9 +8,21 @@
       network-security-level 'high
       gnutls-min-prime-bits 2048
       nsm-save-host-names t)
+(setq projectile-project-search-path '("~/Development"))
 ;; Place your private configuration here
-(setq doom-font (font-spec :family "IBM Plex Mono" :size 16))
-(setq doom-big-font (font-spec :family "IBM Plex Mono" :size 22))
+;; (setq doom-font (font-spec :family "IBM Plex Mono" :size 16))
+;; (setq doom-big-font (font-spec :family "IBM Plex Mono" :size 22))
+(setq doom-font (font-spec :family "Comic Code" :size 16))
+(setq doom-big-font (font-spec :family "Comic Code" :size 22))
+(defun my-theme-customizations()
+  (set-face-italic 'font-lock-keyword-face t)
+  (set-face-bold 'font-lock-keyword-face t))
+(after! php-mode
+  (setq php-font-lock-keywords (append
+                                php-font-lock-keywords
+                                `((("\\(\\sw+\\)(" 1 'php-function-call)
+                                        )))))
+(add-hook 'doom-load-theme-hook #'my-theme-customizations)
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
                                         ;(add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -34,10 +46,10 @@
   (backward-button n nil))
 
                                         ;(require! 'ac-php-core)
-;(map! :leader
-;      :map doom-leader-map
-;        (:prefix ("c" . "code")
-;          :desc "Toggle comment" "l" #'(message "hi!")))
+                                        ;(map! :leader
+                                        ;      :map doom-leader-map
+                                        ;        (:prefix ("c" . "code")
+                                        ;          :desc "Toggle comment" "l" #'(message "hi!")))
 (defun move-line-up ()
   (interactive)
   (transpose-lines 1)
@@ -54,8 +66,8 @@
 ;; do what. Specifically for command -> control.
 ;; Long story short, control + right/left changes desktop workspaces in OSX.
 ;; And I don't want that to happen when I'm navigating code. So I rebind it.
- ;;(setq mac-command-modifier 'control)
- ;; (setq mac-control-modifier 'command)
+;;(setq mac-command-modifier 'control)
+;; (setq mac-control-modifier 'command)
 
 (defun replace-in-string (what with in)
   (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
@@ -74,8 +86,8 @@
 
 (setq-default
  whitespace-line-column 80)
-;(delq! 'trailing whitespace-style)
- (setq whitespace-style '(face indentation tabs tab-mark spaces space-mark newline newline-mark))
+                                        ;(delq! 'trailing whitespace-style)
+(setq whitespace-style '(face indentation tabs tab-mark spaces space-mark newline newline-mark))
 
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
@@ -282,6 +294,26 @@
           (lambda ()
             (org-set-property "LASTWORKED" (format-time-string "[%Y-%m-%d %a]"))))
 (setq org-descriptive-links nil)
-(require 'elcord)
+;; (require 'elcord)
+
 (setq elcord-display-buffer-details 'nil)
-(elcord-mode)
+;; (elcord-mode)
+
+(after! doom-modeline
+  (doom-modeline-def-modeline 'main
+    '(bar window-number modals matches buffer-info remote-host buffer-position selection-info)  ; <-- 3rd in list
+    '(objed-state misc-info persp-name github fancy-battery debug input-method buffer-encoding lsp major-mode process vcs checker)))
+
+(after! persp-mode
+  (persp-def-buffer-save/load
+   :tag-symbol 'def-indirect-buffer
+   :predicate #'buffer-base-buffer
+   :save-function (lambda (buf tag vars)
+                    (list tag (buffer-name buf) vars
+                          (buffer-name (buffer-base-buffer buf))))
+   :load-function (lambda (savelist &rest _rest)
+                    (cl-destructuring-bind (buf-name _vars base-buf-name &rest _)
+                        (cdr savelist)
+                      (push (cons buf-name base-buf-name)
+                            +workspaces--indirect-buffers-to-restore)
+                      nil))))
