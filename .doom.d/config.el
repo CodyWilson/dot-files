@@ -17,11 +17,17 @@
 (defun my-theme-customizations()
   (set-face-italic 'font-lock-keyword-face t)
   (set-face-bold 'font-lock-keyword-face t))
+
 (after! php-mode
+  (modify-syntax-entry ?_ "w" php-mode-syntax-table)
+  (modify-syntax-entry ?$ "w" php-mode-syntax-table)
   (setq php-font-lock-keywords (append
                                 php-font-lock-keywords
                                 `((("\\(\\sw+\\)(" 1 'php-function-call)
-                                        )))))
+                                   )))))
+(after! web-mode
+  (modify-syntax-entry ?_ "w" web-mode-syntax-table)
+  (modify_syntax-entry ?$ "w" web-mode-syntax-table))
 (add-hook 'doom-load-theme-hook #'my-theme-customizations)
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
@@ -184,36 +190,36 @@
 
                                         ;(setq company-box-icons-acphp '(nil))
 
-(def-package! composer
-  :when (featurep! :lang php)
-  :after-call (php-mode)
-  :commands (composer composer-install composer-require composer-dumb-autoload
-                      composer-find-json-file composer-view-lock-file))
+;; (def-package! composer
+;;   :when (featurep! :lang php)
+;;   :after-call (php-mode)
+;;   :commands (composer composer-install composer-require composer-dumb-autoload
+;;                       composer-find-json-file composer-view-lock-file))
 ;;(setq company-idle-delay 0.3)
 
 ;; Pulled from Amosbird's config
-;; (setq-default company-idle-delay 0.5
-;;               company-tooltip-idle-delay 0.5
-;;               company-auto-complete nil ; this is actually company-auto-finish
-;;               company-tooltip-limit 14
-;;               company-dabbrev-downcase nil
-;;               company-dabbrev-ignore-case nil
-;;               company-dabbrev-code-other-buffers t
-;;               company-dabbrev-code-time-limit 0.5
-;;               company-dabbrev-ignore-buffers "\\`[ *]"
-;;               company-tooltip-align-annotations t
-;;               company-require-match 'never
-;;               company-global-modes '(not eshell-mode comint-mode erc-mode message-mode help-mode gud-mode)
-;;               ;;company-frontends (append '(company-tng-frontend) company-frontends)
-;;               ;company-backends '(company-lsp company-capf company-dabbrev company-ispell company-yasnippet)
-;;               company-transformers nil
-;;               ;;company-lsp-async t
-;;               ;;company-lsp-cache-candidates nil
-;;               company-search-regexp-function 'company-search-flex-regexp)
+(setq-default company-idle-delay 0.3
+              company-tooltip-idle-delay 0
+              company-auto-complete nil ; this is actually company-auto-finish
+              company-tooltip-limit 14
+              company-dabbrev-downcase nil
+              company-dabbrev-ignore-case nil
+              company-dabbrev-code-other-buffers t
+              company-dabbrev-code-time-limit 0.5
+              company-dabbrev-ignore-buffers "\\`[ *]"
+              company-tooltip-align-annotations t
+              company-require-match 'never
+              company-global-modes '(not eshell-mode comint-mode erc-mode message-mode help-mode gud-mode)
+              ;;company-frontends (append '(company-tng-frontend) company-frontends)
+                                        ;company-backends '(company-lsp company-capf company-dabbrev company-ispell company-yasnippet)
+              company-transformers nil
+              ;;company-lsp-async t
+              ;;company-lsp-cache-candidates nil
+              company-search-regexp-function 'company-search-flex-regexp)
 
-(def-package! php-runtime
-  :when (featurep! :lang php)
-  :defer t)
+;; (def-package! php-runtime
+;;   :when (featurep! :lang php)
+;;   :defer t)
 
 (when IS-MAC
   ;; This function lets me either launch/put focus onto firefox.
@@ -285,7 +291,7 @@
   (add-hook 'php-mode-hook (lambda() (setq c-basic-offset 4)))
   )
 ;; ORG MODE CHANGES
-
+(fancy-battery-mode +1)
 ;; Set default column view headings: Task Total-Time Time-Stamp
 (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16LASTWORKED %16CLOSED")
 (setq org-log-done "time")
@@ -297,7 +303,7 @@
 ;; (require 'elcord)
 
 (setq elcord-display-buffer-details 'nil)
-;; (elcord-mode)
+(elcord-mode)
 
 (after! doom-modeline
   (doom-modeline-def-modeline 'main
