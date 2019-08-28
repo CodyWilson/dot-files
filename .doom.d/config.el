@@ -21,13 +21,14 @@
 (after! php-mode
   (modify-syntax-entry ?_ "w" php-mode-syntax-table)
   (modify-syntax-entry ?$ "w" php-mode-syntax-table)
+  (set-company-backend! 'php-mode 'company-phpactor 'company-dabbrev-code)
   (setq php-font-lock-keywords (append
                                 php-font-lock-keywords
                                 `((("\\(\\sw+\\)(" 1 'php-function-call)
                                    )))))
 (after! web-mode
   (modify-syntax-entry ?_ "w" web-mode-syntax-table)
-  (modify_syntax-entry ?$ "w" web-mode-syntax-table))
+  (modify-syntax-entry ?$ "w" web-mode-syntax-table))
 (add-hook 'doom-load-theme-hook #'my-theme-customizations)
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
@@ -199,7 +200,7 @@
 
 ;; Pulled from Amosbird's config
 (setq-default company-idle-delay 0.3
-              company-tooltip-idle-delay 0
+              company-tooltip-idle-delay 0.3
               company-auto-complete nil ; this is actually company-auto-finish
               company-tooltip-limit 14
               company-dabbrev-downcase nil
@@ -310,16 +311,8 @@
     '(bar window-number modals matches buffer-info remote-host buffer-position selection-info)  ; <-- 3rd in list
     '(objed-state misc-info persp-name github fancy-battery debug input-method buffer-encoding lsp major-mode process vcs checker)))
 
-(after! persp-mode
-  (persp-def-buffer-save/load
-   :tag-symbol 'def-indirect-buffer
-   :predicate #'buffer-base-buffer
-   :save-function (lambda (buf tag vars)
-                    (list tag (buffer-name buf) vars
-                          (buffer-name (buffer-base-buffer buf))))
-   :load-function (lambda (savelist &rest _rest)
-                    (cl-destructuring-bind (buf-name _vars base-buf-name &rest _)
-                        (cdr savelist)
-                      (push (cons buf-name base-buf-name)
-                            +workspaces--indirect-buffers-to-restore)
-                      nil))))
+
+;; (require 'exwm)
+;; (require 'exwm-config)
+;; (exwm-config-default)
+;; (exwm-enable)
