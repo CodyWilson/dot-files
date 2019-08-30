@@ -151,24 +151,3 @@
        ;; provides a Spacemacs-inspired keybinding scheme and a smartparens
        ;; config. Use it as a reference for your own modules.
        (default +bindings +smartparens))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("34c99997eaa73d64b1aaa95caca9f0d64229871c200c5254526d0062f8074693" "bc7b87836fd141505e56cdd78626e5fd1bc03bdbf0e945e5868a04777778269b" "a0f5d05e3e64c2d71d6a03ad029870c9322c974a5405ff82b955c715ffb32cb4" default)))
- '(safe-local-variable-values
-   (quote
-    ((php-project-bootstrap-scripts
-      (php-project-root . "/app/config/bootstrap.php")
-      ("/Users/codywilson/Development/ide-stubs/vendor/autoload.php"))
-     (ssh-deploy-automatically-detect-remote-changes)
-     (ssh-deploy-on-explicit-save . t)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
