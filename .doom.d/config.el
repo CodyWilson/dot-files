@@ -316,3 +316,9 @@
 ;; (require 'exwm-config)
 ;; (exwm-config-default)
 ;; (exwm-enable)
+(after! persp-mode
+  (remove-hook 'persp-filter-save-buffers-functions #'buffer-live-p)
+
+  (defun +workspaces-dead-buffer-p (buf)
+    (not (buffer-live-p buf)))
+  (add-hook 'persp-filter-save-buffers-functions #'+workspaces-dead-buffer-p))
