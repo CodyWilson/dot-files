@@ -1,6 +1,6 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
-
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (setq uniquify-buffer-name-style nil)
 (defun gnutls-available-p () nil)
 (setq tls-checktrust t
@@ -9,6 +9,9 @@
       gnutls-min-prime-bits 2048
       nsm-save-host-names t)
 (setq projectile-project-search-path '("~/Development"))
+;; Sadly, this causes quite substanial delays on my OSX machine :/
+;; I'll just diff separately
+(remove-hook 'server-switch-hook 'magit-commit-diff)
 ;; Place your private configuration here
 ;; (setq doom-font (font-spec :family "IBM Plex Mono" :size 16))
 ;; (setq doom-big-font (font-spec :family "IBM Plex Mono" :size 22))
@@ -17,6 +20,9 @@
 (defun my-theme-customizations()
   (set-face-italic 'font-lock-keyword-face t)
   (set-face-bold 'font-lock-keyword-face t))
+(map! :leader
+      :prefix "c"
+      :desc "surround-db-quotes" "i" #'(general-simulate-keys "ysiw\""))
 
 (after! php-mode
   (modify-syntax-entry ?_ "w" php-mode-syntax-table)
@@ -68,13 +74,15 @@
   (transpose-lines 1)
   (forward-line -1))
 
+
+
 ;; These are mac specific and probably look weird to anyone who isn't me.
 ;; Basically I moved a lot of keybinds around on OSX, and changed what keys
 ;; do what. Specifically for command -> control.
 ;; Long story short, control + right/left changes desktop workspaces in OSX.
 ;; And I don't want that to happen when I'm navigating code. So I rebind it.
 ;;(setq mac-command-modifier 'control)
-;; (setq mac-control-modifier 'command)
+;;(setq mac-control-modifier 'command)
 
 (defun replace-in-string (what with in)
   (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
@@ -166,8 +174,7 @@
 
 (setq web-mode-engines-alist
       '(("php"    . "\\.phtml\\'")
-        )
-      )
+        ("jinja"  . "\\.phtml\\'")))
 
 (after! web-mode
   (add-hook 'web-mode-hook #'flycheck-mode)
@@ -199,8 +206,8 @@
 ;;(setq company-idle-delay 0.3)
 
 ;; Pulled from Amosbird's config
-(setq-default company-idle-delay 0.3
-              company-tooltip-idle-delay 0.3
+(setq-default company-idle-delay 0.2
+              company-tooltip-idle-delay 0.2
               company-auto-complete nil ; this is actually company-auto-finish
               company-tooltip-limit 14
               company-dabbrev-downcase nil
@@ -271,7 +278,7 @@
                   "--delete"
                   "--delete-excluded"
                   (concat "--exclude-from=" path-local "rsync_exclude.txt")
-                  (concat "--exclude-from=" path-local ".gitignore")
+                  ;;(concat "--exclude-from=" path-local ".gitignore")
                   path-local
                   path-upload)))
 
@@ -292,7 +299,6 @@
   (add-hook 'php-mode-hook (lambda() (setq c-basic-offset 4)))
   )
 ;; ORG MODE CHANGES
-(fancy-battery-mode +1)
 ;; Set default column view headings: Task Total-Time Time-Stamp
 (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16LASTWORKED %16CLOSED")
 (setq org-log-done "time")
@@ -301,24 +307,46 @@
           (lambda ()
             (org-set-property "LASTWORKED" (format-time-string "[%Y-%m-%d %a]"))))
 (setq org-descriptive-links nil)
-;; (require 'elcord)
 
 (setq elcord-display-buffer-details 'nil)
-(elcord-mode)
+;; (elcord-mode)
 
 (after! doom-modeline
   (doom-modeline-def-modeline 'main
     '(bar window-number modals matches buffer-info remote-host buffer-position selection-info)  ; <-- 3rd in list
-    '(objed-state misc-info persp-name github fancy-battery debug input-method buffer-encoding lsp major-mode process vcs checker)))
-
+    '(objed-state misc-info persp-name github battery debug input-method buffer-encoding lsp major-mode process vcs checker)))
+(when IS-MAC (display-battery-mode +1))
 
 ;; (require 'exwm)
 ;; (require 'exwm-config)
 ;; (exwm-config-default)
 ;; (exwm-enable)
+
+(after! flycheck-mode
+  (flycheck-define-checker php-phplint
+    "Checker for PHPLint http://www.icosaedro.it/phplint/"
+    :command ("phpl" "--print-column-number" "--no-print-context" "--no-print-source" "--no-overall" source)
+    :error-patterns
+    ((error line-start line ":" column ": ERROR: " (message))
+     (warning line-start line ":" column ": Warning: " (message))
+     (info line-start line ":" column ": notice: " (message)))
+    :modes (php-mode php+-mode))
+
+  ;; Register the checker
+  (add-to-list 'flycheck-checkers 'php-phplint 'append)
+
+  ;; Add to the php chains
+  (flycheck-add-next-checker 'php '(warning . php-phplint) 'append)
+  (flycheck-add-next-checker 'php-phpmd '(warning . php-phplint) 'append)
+  (flycheck-add-next-checker 'php-phpcs '(warning . php-phplint) 'append))
+
 (after! persp-mode
   (remove-hook 'persp-filter-save-buffers-functions #'buffer-live-p)
 
   (defun +workspaces-dead-buffer-p (buf)
     (not (buffer-live-p buf)))
   (add-hook 'persp-filter-save-buffers-functions #'+workspaces-dead-buffer-p))
+
+(defadvice! +magit-invalidate-projectile-cache-a (&rest _args)
+  :after '(magit-checkout magit-branch-and-checkout)
+  (projectile-invalidate-cache nil))
