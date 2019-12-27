@@ -25,7 +25,8 @@
        fill-column
        ;;fci               ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE tags
-       modeline          ; snazzy, Atom-inspired modeline, plus API
+       (modeline
+         +light); snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink the current line after jumping
        ;;neotree           ; a project drawer, like NERDTree for vim
        treemacs          ; a project drawer, like neotree but cooler
@@ -99,7 +100,7 @@
        data              ; config/data formats
        emacs-lisp        ; drown in parentheses
        ;;(haskell +intero) ; a language that's lazier than I am
-       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;latex             ; writing papers in Emacs has never been so fun
        ;;ledger            ; an accounting system in Emacs
@@ -111,7 +112,8 @@
         +ipython
         +pandoc
         +gnuplot
-        +present)
+        +present
+        +pomodoro)
        (php +lsp)               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        python            ; beautiful is better than ugly

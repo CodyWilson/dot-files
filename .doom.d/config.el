@@ -8,10 +8,15 @@
       network-security-level 'high
       gnutls-min-prime-bits 2048
       nsm-save-host-names t)
+;; (setq +doom-dashboard-functions '(doom-dashboard-widget-banner)
+      ;; +doom-dashboard-banner-padding '(0 . 0)
+      ;; fancy-splash-image "~/.doom.d/doom-christmas.png")
+(setq fancy-splash-image "~/.doom.d/narf.png")
 (setq projectile-project-search-path '("~/Development"))
 ;; Sadly, this causes quite substanial delays on my OSX machine :/
 ;; I'll just diff separately
-(remove-hook 'server-switch-hook 'magit-commit-diff)
+(after! magit-mode
+  (remove-hook 'server-switch-hook 'magit-commit-diff))
 ;; Place your private configuration here
 ;; (setq doom-font (font-spec :family "IBM Plex Mono" :size 16))
 ;; (setq doom-big-font (font-spec :family "IBM Plex Mono" :size 22))
@@ -173,8 +178,8 @@
 (setq doom-modeline-github-interval (* 30 60))
 
 (setq web-mode-engines-alist
-      '(("php"    . "\\.phtml\\'")
-        ("jinja"  . "\\.phtml\\'")))
+      '(("php"    . "\\.phtml\\'")))
+        ;;("jinja"  . "\\.phtml\\'")))
 
 (after! web-mode
   (add-hook 'web-mode-hook #'flycheck-mode)
@@ -311,11 +316,11 @@
 (setq elcord-display-buffer-details 'nil)
 ;; (elcord-mode)
 
-(after! doom-modeline
-  (doom-modeline-def-modeline 'main
-    '(bar window-number modals matches buffer-info remote-host buffer-position selection-info)  ; <-- 3rd in list
-    '(objed-state misc-info persp-name github battery debug input-method buffer-encoding lsp major-mode process vcs checker)))
-(when IS-MAC (display-battery-mode +1))
+;;(after! doom-modeline
+ ;; (doom-modeline-def-modeline 'main
+;;    '(bar window-number modals matches buffer-info remote-host buffer-position selection-info)  ; <-- 3rd in list
+;;    '(objed-state misc-info persp-name github battery debug input-method buffer-encoding lsp major-mode process vcs checker)))
+;; (when IS-MAC (display-battery-mode +1))
 
 ;; (require 'exwm)
 ;; (require 'exwm-config)
@@ -347,6 +352,7 @@
     (not (buffer-live-p buf)))
   (add-hook 'persp-filter-save-buffers-functions #'+workspaces-dead-buffer-p))
 
-(defadvice! +magit-invalidate-projectile-cache-a (&rest _args)
-  :after '(magit-checkout magit-branch-and-checkout)
-  (projectile-invalidate-cache nil))
+(after! magit-mode
+  (defadvice! +magit-invalidate-projectile-cache-a (&rest _args)
+    :after '(magit-checkout magit-branch-and-checkout)
+    (projectile-invalidate-cache nil)))
