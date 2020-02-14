@@ -18,12 +18,12 @@
 ;; These were originally there in doom, and then Henrik removed
 ;; them for some reason.
 (map!
- :i [tab] #'indent-for-tab-command
+ ;; :i [tab] #'indent-for-tab-command
  :i "M-v" #'clipboard-yank
  :v "M-c" #'evil-yank
- :i "C-e" #'doom/forward-to-last-non-comment-or-eol
+ ;; :i "C-e" #'doom/forward-to-last-non-comment-or-eol
  :i "<M-backspace>" #'doom/backward-kill-to-bol-and-indent
- :i "C-a" #'beginning-of-line
+ ;; :i "C-a" #'beginning-of-line
  :nvme "M-a" #'mark-whole-buffer
  :i "C-l" #'right-char
  :i "C-j" #'left-char
@@ -40,7 +40,6 @@
    :map emmet-mode-keymap
    :i [tab] #'indent-for-tab-command
    ))
-
 ;; I'm binding webmode BS tab to this, because it may be
 ;; useful like, 1/2000 times I meant to tab. So I may still want it
 ;; I just don't want tab to expand things unexpectedly. Gets in the way.

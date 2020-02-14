@@ -20,10 +20,20 @@
 ;; The interval of checking github.
 ;; (setq doom-modeline-github-interval (* 30 60))
 
-
+(use-package centered-cursor-mode
+  :hook (prog-mode . centered-cursor-mode)
+  :init
+  (add-hook! centered-cursor-mode
+    (setq-local scroll-preserve-screen-position t
+                scroll-conservatively 0
+                maximum-scroll-margin 0.5
+                scroll-margin 99999)))
 
 (setq elcord-display-buffer-details 'nil)
-;; (elcord-mode)
+(elcord-mode)
+
+(after! (flycheck lsp-ui)
+  (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
 
 (after! persp-mode
   (remove-hook 'persp-filter-save-buffers-functions #'buffer-live-p)
