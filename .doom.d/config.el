@@ -32,7 +32,10 @@
                 scroll-margin 99999)))
 
 (setq elcord-display-buffer-details 'nil)
-;; (elcord-mode)
+(elcord-mode)
+
+(after! (flycheck lsp-ui)
+  (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
 
 (after! (flycheck lsp-ui)
   (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))

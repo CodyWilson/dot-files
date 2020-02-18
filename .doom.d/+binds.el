@@ -26,6 +26,7 @@
  :i "<M-backspace>" #'doom/backward-kill-to-bol-and-indent
  :i "<C-a>" #'beginning-of-line
  :nvme "<M-a>" #'mark-whole-buffer)
+
 (map! :leader
       :desc "Ace Window" "SPC" #'ace-window)
 
