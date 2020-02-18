@@ -17,6 +17,8 @@
 (package! exec-path-from-shell)
 (package! play-sound :recipe (:type git :host github :repo "leoliu/play-sound-osx"))
 (package! company-phpactor)
+(package! centered-cursor-mode)
+;; (package! eaf :recipe (:type git :host github :repo "manateelazycat/emacs-application-framework"))
 ;; PHPActor has an issue installing with the default, cause the JSON files
 ;; are missing
 ;; (when (featurep! :lang php)

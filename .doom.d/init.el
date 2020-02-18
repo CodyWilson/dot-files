@@ -89,8 +89,12 @@
        ;;tmux              ; an API for interacting with tmux
        upload            ; map local to remote projects via ssh/ftp
        ;;wakatime
-       flyspell
-       flycheck
+       ; flyspell
+       ; flycheck
+
+    :checkers
+    syntax
+    spell
 
        :lang
        assembly          ; assembly for fun or debugging

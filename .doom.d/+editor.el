@@ -1,8 +1,6 @@
 ;;; ~/Development/dot-files/.doom.d/+editor.el -*- lexical-binding: t; -*-
 
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-(set-language-environment "UTF-8")
-(set-default-coding-systems 'utf-8)
 ;; Old fix for buffers swapping workplaces when reloading
 ;; In reality, they still do that off and on. /shrug
 (setq uniquify-buffer-name-style nil)
@@ -20,6 +18,7 @@
 ;; Yay, comic code font!
 (setq doom-font (font-spec :family "Comic Code" :size 16))
 (setq doom-big-font (font-spec :family "Comic Code" :size 22))
+(setq ns-use-thin-smoothing t)
 
 ;; Bold & Italics keywords
 (defun my-theme-customizations()
@@ -32,7 +31,7 @@
 (setq whitespace-style '(face indentation tabs tab-mark spaces space-mark newline newline-mark))
 (add-hook 'prog-mode-hook #'whitespace-mode)
 
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;; (add-hook 'before-save-hook 'whitespace-cleanup)
 ;; I use snake_case a lot
 (setq global-superword-mode 1)
 
