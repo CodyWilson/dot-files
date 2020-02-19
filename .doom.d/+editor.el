@@ -4,6 +4,8 @@
 ;; Old fix for buffers swapping workplaces when reloading
 ;; In reality, they still do that off and on. /shrug
 (setq uniquify-buffer-name-style nil)
+;; Disable that annoyingly large LSP buffer at the bottom
+(setq lsp-signature-auto-activate nil)
 
 ;; force TLS or something, I forget
 (defun gnutls-available-p () nil)
