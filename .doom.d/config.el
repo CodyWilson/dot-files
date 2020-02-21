@@ -7,7 +7,6 @@
   (defadvice! +magit-invalidate-projectile-cache-a (&rest _args)
     :after '(magit-checkout magit-branch-and-checkout)
     (projectile-invalidate-cache nil)))
-
 (if IS-MAC
     (setq projectile-project-search-path '("/Volumes/Development"))
   (setq projectile-project-search-path '("~/Development")))
@@ -33,9 +32,6 @@
 
 (setq elcord-display-buffer-details 'nil)
 (elcord-mode)
-
-(after! (flycheck lsp-ui)
-  (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
 
 (after! (flycheck lsp-ui)
   (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
