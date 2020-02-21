@@ -4,7 +4,7 @@
 ;; Old fix for buffers swapping workplaces when reloading
 ;; In reality, they still do that off and on. /shrug
 (setq uniquify-buffer-name-style nil)
-
+(evil-snipe-override-mode 1)
 ;; force TLS or something, I forget
 (defun gnutls-available-p () nil)
 (setq tls-checktrust t
