@@ -32,14 +32,14 @@
 
 (setq elcord-display-buffer-details 'nil)
 (elcord-mode)
-(after! lsp-ui
-  (add-hook! 'lsp-ui-mode-hook
-    (run-hooks (intern (format "%s-lsp-ui-hook" major-mode)))))
+;; (after! lsp-ui
+  ;; (add-hook! 'lsp-ui-mode-hook
+    ;; (run-hooks (intern (format "%s-lsp-ui-hook" major-mode)))))
 ;; (after! (flycheck lsp-ui)
   ;; (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
 ;; (add-hook! 'lsp-after-initialize-hook
 ;;            (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
-(add-hook 'js2-mode-lsp-ui-hook (lamda() (flycheck-add-next-checker 'lsp-ui 'javascript-eslint)))
+;; (add-hook 'js2-mode-lsp-ui-hook (lamda() (flycheck-add-next-checker 'lsp-ui 'javascript-eslint)))
 
 (after! persp-mode
   (remove-hook 'persp-filter-save-buffers-functions #'buffer-live-p)

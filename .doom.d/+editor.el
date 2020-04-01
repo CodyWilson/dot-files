@@ -7,6 +7,7 @@
 (evil-snipe-override-mode 1)
 ;; Disable that annoyingly large LSP buffer at the bottom
 (setq lsp-signature-auto-activate nil)
+(setq lsp-eldoc-hook nil)
 
 ;; force TLS or something, I forget
 (defun gnutls-available-p () nil)
