@@ -7,8 +7,9 @@
   (defadvice! +magit-invalidate-projectile-cache-a (&rest _args)
     :after '(magit-checkout magit-branch-and-checkout)
     (projectile-invalidate-cache nil)))
-
-(setq projectile-project-search-path '("~/Development"))
+(if IS-MAC
+    (setq projectile-project-search-path '("/Volumes/Development"))
+  (setq projectile-project-search-path '("~/Development")))
 (exec-path-from-shell-initialize)
 
 (after! yasnippet
@@ -31,9 +32,14 @@
 
 (setq elcord-display-buffer-details 'nil)
 (elcord-mode)
-
-(after! (flycheck lsp-ui)
-  (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
+;; (after! lsp-ui
+  ;; (add-hook! 'lsp-ui-mode-hook
+    ;; (run-hooks (intern (format "%s-lsp-ui-hook" major-mode)))))
+;; (after! (flycheck lsp-ui)
+  ;; (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
+;; (add-hook! 'lsp-after-initialize-hook
+;;            (flycheck-add-next-checker 'lsp-ui 'javascript-eslint))
+;; (add-hook 'js2-mode-lsp-ui-hook (lamda() (flycheck-add-next-checker 'lsp-ui 'javascript-eslint)))
 
 (after! persp-mode
   (remove-hook 'persp-filter-save-buffers-functions #'buffer-live-p)
@@ -52,14 +58,13 @@
 (load! "+web")
 (load! "+org")
 (load! "+binds")
-
 (defun js2-mode-use-eslint-indent ()
   (let ((json-object-type 'hash-table)
-        (json-config (shell-command-to-string (format  "eslint --print-config %s"
-                                                       (shell-quote-argument
-                                                        (buffer-file-name))))))
+    (json-config (shell-command-to-string (format  "eslint --print-config %s"
+                               (shell-quote-argument
+                            (buffer-file-name))))))
     (ignore-errors
       (setq js-indent-level
-            (aref (gethash "indent" (gethash  "rules" (json-read-from-string json-config))) 1)))))
+        (aref (gethash "indent" (gethash  "rules" (json-read-from-string json-config))) 1)))))
 
 (add-hook 'js2-mode-hook #'js2-mode-use-eslint-indent)

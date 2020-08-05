@@ -3,7 +3,8 @@
 (setq web-mode-enable-auto-pairing t)
 (setq web-mode-engines-alist
       '(("php"    . "\\.phtml\\'")
-      ("jinja"    . "\\.volt\\'")))
+        ("jinja"    . "\\.volt\\'")))
+(add-to-list 'auto-mode-alist '("\\.volt\\'" . web-mode))
 
 (after! web-mode
   (add-hook 'web-mode-hook #'flycheck-mode)
