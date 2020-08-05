@@ -18,7 +18,7 @@
 (setq fancy-splash-image "~/.doom.d/narf.png")
 
 ;; Yay, comic code font!
-(setq doom-font (font-spec :family "Comic Code" :size 16))
+(setq doom-font (font-spec :family "Comic Code" :size 18))
 (setq doom-big-font (font-spec :family "Comic Code" :size 22))
 
 ;; Bold & Italics keywords

@@ -36,5 +36,4 @@
 ;(when (and (featurep! :feature lookup) (featurep! :lang php))
  ;; (package! php-eldoc);)
 (package! elcord)
-(package! fancy-battery)
-(package! exwm)
+(package! eslintd-fix)

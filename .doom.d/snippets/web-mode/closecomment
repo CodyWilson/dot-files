@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: close comment
+# key: !/
+# --
+<!--\\\\ $0 //-->

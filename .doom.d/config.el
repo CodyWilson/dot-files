@@ -42,6 +42,9 @@
     (not (buffer-live-p buf)))
   (add-hook 'persp-filter-save-buffers-functions #'+workspaces-dead-buffer-p))
 
+(setq eslintd-fix-executable "/usr/local/bin/eslint_d")
+(add-hook 'js2-mode-hook 'eslintd-fix-mode)
+(setq flycheck-javascript-eslint-executable "/usr/local/bin/eslint_d")
 (load! "+editor")
 (load! "+upload")
 (load! "+company")
@@ -49,3 +52,14 @@
 (load! "+web")
 (load! "+org")
 (load! "+binds")
+
+(defun js2-mode-use-eslint-indent ()
+  (let ((json-object-type 'hash-table)
+        (json-config (shell-command-to-string (format  "eslint --print-config %s"
+                                                       (shell-quote-argument
+                                                        (buffer-file-name))))))
+    (ignore-errors
+      (setq js-indent-level
+            (aref (gethash "indent" (gethash  "rules" (json-read-from-string json-config))) 1)))))
+
+(add-hook 'js2-mode-hook #'js2-mode-use-eslint-indent)
