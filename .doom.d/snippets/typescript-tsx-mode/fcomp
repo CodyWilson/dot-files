@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: fcomp
+# --
+import {h, render, FunctionalComponent} from 'preact';
+
+interface IProps {
+
+}
+
+const ${1:Name}: FunctionalComponent<IProps> = (props: IProps) => {
+    return (
+        <div />
+    );
+};
+
+export default ${Name};

@@ -30,8 +30,8 @@
                 maximum-scroll-margin 0.5
                 scroll-margin 99999)))
 
-(setq elcord-display-buffer-details 'nil)
-(elcord-mode)
+;; (setq elcord-display-buffer-details 'nil)
+;; (elcord-mode)
 ;; (after! lsp-ui
   ;; (add-hook! 'lsp-ui-mode-hook
     ;; (run-hooks (intern (format "%s-lsp-ui-hook" major-mode)))))
@@ -48,9 +48,11 @@
     (not (buffer-live-p buf)))
   (add-hook 'persp-filter-save-buffers-functions #'+workspaces-dead-buffer-p))
 
-(setq eslintd-fix-executable "/usr/local/bin/eslint_d")
+;; (setq eslintd-fix-executable "/usr/local/bin/eslint_d")
 (add-hook 'js2-mode-hook 'eslintd-fix-mode)
-(setq flycheck-javascript-eslint-executable "/usr/local/bin/eslint_d")
+(add-hook 'typescript-mode-hook 'eslintd-fix-mode)
+(add-hook 'typescript-tsx-mode-hook 'eslintd-fix-mode)
+;; (setq flycheck-javascript-eslint-executable "/usr/local/bin/eslint_d")
 (load! "+editor")
 (load! "+upload")
 (load! "+company")
@@ -68,3 +70,5 @@
         (aref (gethash "indent" (gethash  "rules" (json-read-from-string json-config))) 1)))))
 
 (add-hook 'js2-mode-hook #'js2-mode-use-eslint-indent)
+;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/eaf/")
+;; (require 'eaf)

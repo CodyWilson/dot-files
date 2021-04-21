@@ -12,10 +12,6 @@
       :desc "dumb jump" "c" #'dumb-jump-go)
 
 (map! :leader
-      :prefix "/"
-      :desc "Project Search" "/" #'+ivy/project-search)
-
-(map! :leader
       :desc "Find File in Project" "." #'+ivy/projectile-find-file)
 
 ;; These were originally there in doom, and then Henrik removed
@@ -32,19 +28,19 @@
 
 
 ;; When I tab, I ONLY want to tab. Go away webmode bs.
-(after! emmet-mode
-  (map!
-   :map emmet-mode-keymap
-   :i [tab] #'indent-for-tab-command
-   ))
+;; (after! emmet-mode
+;;   (map!
+;;    :map emmet-mode-keymap
+;;    :i [tab] #'indent-for-tab-command
+;;    ))
 ;; I'm binding webmode BS tab to this, because it may be
 ;; useful like, 1/2000 times I meant to tab. So I may still want it
 ;; I just don't want tab to expand things unexpectedly. Gets in the way.
-(after! emmet-mode
-  (map! :localleader
-        :map emmet-mode-keymap
-        :prefix "c"
-        :desc "Full Expand" [tab] #'+web/indent-or-yas-or-emmet-expand))
+;; (after! emmet-mode
+;;   (map! :localleader
+;;         :map emmet-mode-keymap
+;;         :prefix "c"
+;;         :desc "Full Expand" [tab] #'+web/indent-or-yas-or-emmet-expand))
 
 (when IS-MAC
   ;; This function lets me either launch/put focus onto firefox.

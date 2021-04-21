@@ -8,8 +8,8 @@
 
        :completion
        (company
-        ;+auto
-        ;+childframe
+                                        ;+auto
+                                        ;+childframe
         )           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido              ; the other *other* search engine...
@@ -26,7 +26,7 @@
        ;;fci               ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE tags
        (modeline
-         +light); snazzy, Atom-inspired modeline, plus API
+        +light); snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink the current line after jumping
        ;;neotree           ; a project drawer, like NERDTree for vim
        treemacs          ; a project drawer, like neotree but cooler
@@ -66,6 +66,7 @@
        ;;eshell            ; a consistent, cross-platform shell (WIP)
        ;;hideshow          ; basic code-folding support
        ;;term              ; terminals in Emacs
+       undo
        vc                ; version-control and Emacs, sitting in a tree
 
        :tools
@@ -73,7 +74,7 @@
        (lookup           ; helps you navigate your code and documentation
         +docsets)        ; ...or in Dash docsets locally
        ;;ansible
-       ;;docker
+       docker
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        gist              ; interacting with github gists
@@ -89,12 +90,12 @@
        ;;tmux              ; an API for interacting with tmux
        upload            ; map local to remote projects via ssh/ftp
        ;;wakatime
-       ; flyspell
-       ; flycheck
+                                        ; flyspell
+                                        ; flycheck
 
-    :checkers
-    syntax
-    spell
+       :checkers
+       syntax
+       spell
 
        :lang
        assembly          ; assembly for fun or debugging

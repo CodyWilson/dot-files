@@ -8,6 +8,7 @@
 ;; Disable that annoyingly large LSP buffer at the bottom
 (setq lsp-signature-auto-activate nil)
 (setq lsp-eldoc-hook nil)
+(menu-bar-mode -1)
 
 ;; force TLS or something, I forget
 (defun gnutls-available-p () nil)
