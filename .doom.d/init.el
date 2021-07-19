@@ -3,8 +3,6 @@
 
 (doom! :feature
        ;;debugger          ; FIXME stepping through code, to help you add bugs
-       ;;spellcheck        ; tasing you for misspelling mispelling
-       ;;syntax-checker    ; tasing you for every semicolon you forget
 
        :completion
        (company
@@ -78,7 +76,6 @@
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        gist              ; interacting with github gists
-       macos             ; MacOS-specific commands
        lsp
        make              ; run make tasks from Emacs
        (magit +forge)             ; a git porcelain for Emacs
