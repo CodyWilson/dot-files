@@ -35,6 +35,7 @@
 ;(delq! 'trailing whitespace-style)
 (setq whitespace-style '(face indentation tabs tab-mark spaces space-mark newline newline-mark))
 (add-hook 'prog-mode-hook #'whitespace-mode)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
 ;; (add-hook 'before-save-hook 'whitespace-cleanup)
 ;; I use snake_case a lot
@@ -89,3 +90,4 @@
 
 (defun format-xml ()
     (execute-kbd-macro (kbd "M-% > < RET > C-q C-j < RET ! C-M-\\")))
+(setq +format-with-lsp nil)

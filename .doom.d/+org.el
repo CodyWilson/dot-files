@@ -1,7 +1,8 @@
 ;;; ~/Development/dot-files/.doom.d/+org.el -*- lexical-binding: t; -*-
 
 ;; ORG MODE CHANGES
-(setq org-agenda-files '("~/org"))
+(setq org-agenda-files '("~/.org"))
+(setq org-directory "~/.org")
 ;; Set default column view headings: Task Total-Time Time-Stamp
 (setq org-columns-default-format "%50ITEM(Task) %10CLOCKSUM %16LASTWORKED %16CLOSED")
 (setq org-agenda-prefix-format '((agenda . " %i %-12:c%?-12t% s")
