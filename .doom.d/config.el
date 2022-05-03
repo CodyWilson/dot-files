@@ -49,10 +49,11 @@
   (add-hook 'persp-filter-save-buffers-functions #'+workspaces-dead-buffer-p))
 
 ;; (setq eslintd-fix-executable "/usr/local/bin/eslint_d")
-(add-hook 'js2-mode-hook 'eslintd-fix-mode)
-(add-hook 'typescript-mode-hook 'eslintd-fix-mode)
-(add-hook 'typescript-tsx-mode-hook 'eslintd-fix-mode)
+;; (add-hook 'js2-mode-hook 'eslintd-fix-mode)
+;; (add-hook 'typescript-mode-hook 'eslintd-fix-mode)
+;; (add-hook 'typescript-tsx-mode-hook 'eslintd-fix-mode)
 ;; (setq flycheck-javascript-eslint-executable "/usr/local/bin/eslint_d")
+(add-hook 'rjsx-mode-hook (lambda() (setq! js-indent-level 4)))
 (load! "+editor")
 (load! "+upload")
 (load! "+company")
@@ -60,15 +61,15 @@
 (load! "+web")
 (load! "+org")
 (load! "+binds")
-(defun js2-mode-use-eslint-indent ()
-  (let ((json-object-type 'hash-table)
-    (json-config (shell-command-to-string (format  "eslint --print-config %s"
-                               (shell-quote-argument
-                            (buffer-file-name))))))
-    (ignore-errors
-      (setq js-indent-level
-        (aref (gethash "indent" (gethash  "rules" (json-read-from-string json-config))) 1)))))
+;; (defun js2-mode-use-eslint-indent ()
+;;   (let ((json-object-type 'hash-table)
+;;     (json-config (shell-command-to-string (format  "eslint --print-config %s"
+;;                                (shell-quote-argument
+;;                             (buffer-file-name))))))
+;;     (ignore-errors
+;;       (setq js-indent-level
+;;         (aref (gethash "indent" (gethash  "rules" (json-read-from-string json-config))) 1)))))
 
-(add-hook 'js2-mode-hook #'js2-mode-use-eslint-indent)
+;; (add-hook 'js2-mode-hook #'js2-mode-use-eslint-indent)
 ;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/eaf/")
 ;; (require 'eaf)

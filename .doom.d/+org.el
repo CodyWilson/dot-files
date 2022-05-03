@@ -19,7 +19,7 @@
 (defun org-html--format-image (source attributes info)
   (progn
     (setq source (replace-in-string "%20" " " source))
-    (format "<img src=\"data:image/%s;base64,%s\"%s />"
+    (format "<img src=\"data:image/%s;base64,%s\" alt=\"%s\" />"
             (or (file-name-extension source) "")
             (base64-encode-string
              (with-temp-buffer
@@ -27,3 +27,22 @@
                (buffer-string)))
             (file-name-nondirectory source))
     ))
+
+;; (defun my-org-inline-css-hook (exporter)
+;;   "Insert custom inline css"
+;;   (when (eq exporter 'html)
+;;     (let* ((dir (ignore-errors (file-name-directory (buffer-file-name))))
+;;            (path (concat dir "style.css"))
+;;            (homestyle (or (null dir) (null (file-exists-p path))))
+;;            (final (if homestyle "~/.emacs.d/org-style.css" path))) ;; <- set your own style file path
+;;       (setq org-html-head-include-default-style nil)
+;;       (setq org-html-head (concat
+;;                            "<style type=\"text/css\">\n"
+;;                            "<!--/*--><![CDATA[/*><!--*/\n"
+;;                            (with-temp-buffer
+;;                              (insert-file-contents final)
+;;                              (buffer-string))
+;;                            "/*]]>*/-->\n"
+;;                            "</style>\n")))))
+
+;; (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
