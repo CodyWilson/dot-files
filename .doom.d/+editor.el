@@ -11,12 +11,12 @@
 (menu-bar-mode -1)
 
 ;; force TLS or something, I forget
-(defun gnutls-available-p () nil)
-(setq tls-checktrust t
-      gnutls-verify-error t
-      network-security-level 'high
-      gnutls-min-prime-bits 2048
-      nsm-save-host-names t)
+;; (defun gnutls-available-p () nil)
+;; (setq tls-checktrust t
+;;       gnutls-verify-error t
+;;       network-security-level 'high
+;;       gnutls-min-prime-bits 2048
+;;       nsm-save-host-names t)
 ;; Set the splash image
 (setq fancy-splash-image "~/.doom.d/narf.png")
 
@@ -57,6 +57,7 @@
 (unless (and (fboundp 'play-sound-internal)
              (subrp (symbol-function 'play-sound-internal)))
   (require 'play-sound))
+
 
 
 ;; Add doom pistol noise to going up/down the dashboard
